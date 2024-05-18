@@ -9,7 +9,6 @@ import globalError from './server/controller/errorController.js'
 const app = express()
 app.use(express.json())
 
-
 app.use('/api' , userRouter)
 app.use('*' , (req,res,next)=>{
     const error = new CustomError(`cannot find url ${req.originalUrl}` , 200)
@@ -25,13 +24,13 @@ app.use(globalError)
 
 
 
-mongoose.connect('mongodb://localhost:27017/ecom')
+mongoose.connect('mongodb+srv://sudaisbinsohail:2uCJ91k3qvbUYHN1@cluster0.w4y6vpp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 .then(()=>{
     console.log("Database Connected Successfully")
 })
-.catch(()=>
+.catch((err)=>
 {
-    console.log("Database Connection error")
+    console.log("Database Connection error",err)
 })
 
 app.listen(3000 , ()=>{
