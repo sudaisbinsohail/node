@@ -14,7 +14,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 // let host = "192.168.1.23"
-let host = " 192.168.1.54"
+// let host = " 192.168.1.54"
 app.use('/api' , userRouter)
 app.use('*' , (req,res,next)=>{
     const error = new CustomError(`cannot find url ${req.originalUrl}` , 200)
@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGODB_URL)
     console.log("Database Connection error",err)
 })
 
-app.listen(8000 , host, ()=>{
+app.listen(8000 , ()=>{
     console.log("server is running....." );
    
 })
