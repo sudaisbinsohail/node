@@ -1,7 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose'
 import userRouter from './server/routes/user.js';
-import {userModel} from './server/Model/user.js';
 import CustomError from './server/utils/customError.js';
 import globalError from './server/controller/errorController.js'
 import cors from 'cors'
@@ -13,7 +12,7 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 app.use(cors())
-// let host = "192.168.1.23"
+let host = "0.0.0.0"
 // let host = " 192.168.1.54"
 app.use('/api' , userRouter)
 app.use('*' , (req,res,next)=>{
@@ -31,7 +30,7 @@ mongoose.connect(process.env.MONGODB_URL)
     console.log("Database Connection error",err)
 })
 
-app.listen(8000 , ()=>{
+app.listen(8000 , host,()=>{
     console.log("server is running....." );
    
 })
