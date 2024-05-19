@@ -18,7 +18,8 @@ const UserSchema = new Schema({
         type:String,
     },
     isActive:Boolean,
-    password: String
+    password: String,
+    profileImage:String
 })
 
 

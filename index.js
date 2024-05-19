@@ -4,11 +4,17 @@ import userRouter from './server/routes/user.js';
 import {userModel} from './server/Model/user.js';
 import CustomError from './server/utils/customError.js';
 import globalError from './server/controller/errorController.js'
+import cors from 'cors'
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 
 const app = express()
 app.use(express.json())
-
+app.use(cors())
+// let host = "192.168.1.23"
+let host = " 192.168.1.54"
 app.use('/api' , userRouter)
 app.use('*' , (req,res,next)=>{
     const error = new CustomError(`cannot find url ${req.originalUrl}` , 200)
@@ -16,15 +22,7 @@ app.use('*' , (req,res,next)=>{
 })
 app.use(globalError)
 
-
-
-
-
-
-
-
-
-mongoose.connect('mongodb+srv://sudaisbinsohail:2uCJ91k3qvbUYHN1@cluster0.w4y6vpp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGODB_URL)
 .then(()=>{
     console.log("Database Connected Successfully")
 })
@@ -33,7 +31,7 @@ mongoose.connect('mongodb+srv://sudaisbinsohail:2uCJ91k3qvbUYHN1@cluster0.w4y6vp
     console.log("Database Connection error",err)
 })
 
-app.listen(3000 , ()=>{
+app.listen(8000 , host, ()=>{
     console.log("server is running....." );
    
 })

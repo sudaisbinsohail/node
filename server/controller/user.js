@@ -4,10 +4,13 @@ import asyncHandler from "../utils/asyncHandler.js";
 import apiResponse from "../utils/apiResponse.js";
 import {generateToken , decodeToken} from "../utils/generateToken.js";
 import bcrypt from 'bcrypt'
+import multer from "multer";
 
 
-const registerUser = asyncHandler(async(req,res)=>{  
+const registerUser = asyncHandler(async(req, res , publicId)=>{  
+    console.log(publicId)
     const { error, value } = userRegisterSchema.validate(req.body);
+    value["profileImage"] = publicId;
     if(error){
         throw new CustomError(error,404)
     }else{

@@ -11,13 +11,13 @@ export default (error, req, res, next) => {
         message: error.message,
         stack:error.stack
     });
-    sendErrorsToSlack(error.message , error.statusCode)
+    // sendErrorsToSlack(error.message , error.statusCode)
 };
 
 
 
-const sendErrorsToSlack= async(message,statusCode)=>{
-    await axios.post('https://hooks.slack.com/services/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',{
-        text : `${message} + ${statusCode}`
-    })
-}
+// const sendErrorsToSlack= async(message,statusCode)=>{
+//     await axios.post('https://hooks.slack.com/services/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',{
+//         text : `${message} + ${statusCode}`
+//     })
+// }
