@@ -30,7 +30,7 @@ mongoose.connect(process.env.MONGODB_URL)
     console.log("Database Connection error",err)
 })
 
-app.listen(8000 , host,()=>{
+app.listen(8080 , host,()=>{
     console.log("server is running....." );
    
 })
