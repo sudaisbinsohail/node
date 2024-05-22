@@ -5,15 +5,20 @@ import CustomError from './server/utils/customError.js';
 import globalError from './server/controller/errorController.js'
 import cors from 'cors'
 import dotenv from 'dotenv';
+import {Server}  from 'socket.io';
+import http from 'http'
+import jwt from 'jsonwebtoken'
+import { handleSocketConnections } from './server/utils/socketConnection.js';
 
 dotenv.config()
-
-
 const app = express()
+
 app.use(express.json())
 app.use(cors())
+const server = http.createServer(app);
+const io = new Server(server)
+handleSocketConnections(io)
 let host = "0.0.0.0"
-// let host = " 192.168.1.54"
 app.use('/api' , userRouter)
 app.use('*' , (req,res,next)=>{
     const error = new CustomError(`cannot find url ${req.originalUrl}` , 200)
@@ -30,7 +35,6 @@ mongoose.connect(process.env.MONGODB_URL)
     console.log("Database Connection error",err)
 })
 
-app.listen(8080 , host,()=>{
+server.listen(8080 , host,()=>{
     console.log("server is running....." );
-   
 })
