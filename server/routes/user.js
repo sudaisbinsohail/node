@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import  {registerUser , loginUser , refresh}  from '../controller/user.js';
+import  {registerUser , loginUser , refresh , getAllUsers}  from '../controller/user.js';
 
 import { cloudinary, storage } from '../utils/cloudaniryUpload.js';
 import multer from 'multer';
@@ -15,5 +15,6 @@ userRouter.post('/addUser', upload.single("storage"), (req, res, next) => {
   });
 userRouter.post('/login' , loginUser)
 userRouter.post('/refresh' , refresh)
+userRouter.get('/getAllUsers' , getAllUsers)
 
 export  default userRouter

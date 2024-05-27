@@ -8,8 +8,8 @@ import multer from "multer";
 
 
 const registerUser = asyncHandler(async(req, res , publicId)=>{  
-    console.log(publicId)
     const { error, value } = userRegisterSchema.validate(req.body);
+    console.log(error)
     value["profileImage"] = publicId;
     if(error){
         throw new CustomError(error,404)
@@ -44,7 +44,6 @@ const loginUser = asyncHandler(async (req,res)=>{
         status:user.isActive,
         tokenType:'refresh'
     }
-    
     const accessToken = generateToken(accessTokenPayLoad, 'fghkdskljirtyuifgycdkedkfudghdw', '1h');
     const refreshToken = generateToken(refreshTokenPayLoad, 'fghjkltygudhijokplghjsdkjahdhweui','1d')
     const responseObj = {accessToken , refreshToken , data:user}
@@ -56,7 +55,6 @@ const refresh  = asyncHandler(async(req,res)=>{
     const {token} = req.body;
      
     const user = decodeToken(token);
-    console.log(user.id)
     const userExist = await userModel.findOne({_id:user.id})
     console.log(userExist)
     if(!userExist){
@@ -86,5 +84,9 @@ const refresh  = asyncHandler(async(req,res)=>{
 
 })
 
+const getAllUsers = asyncHandler(async (req,res,next)=>{
+   const user = await userModel.find();
+   apiResponse(res,'Get All user successfully' , 200 , user)
+})
 
-export  {registerUser , loginUser , refresh}
+export  {registerUser , loginUser , refresh , getAllUsers}
